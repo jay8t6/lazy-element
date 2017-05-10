@@ -1,0 +1,50 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../lazy-imports/lazy-imports-behavior.html">
+
+<!--
+`lazy-element`
+An element that lazy loads paper-button.
+
+@demo demo/index.html
+-->
+
+<dom-module id="lazy-element">
+  <link rel="lazy-import" group="lazyUpload" href="../paper-button/paper-button.html">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      paper-button {
+        background-color: green;
+        color: white;
+      }
+    </style>
+    <paper-button>I am a lazy loaded element.</paper-button>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'lazy-element',
+
+      behaviors: [
+        Polymer.LazyImportsBehavior
+      ],
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'lazy-element',
+        }
+      },
+
+      ready: function() {
+        this.debounce('initialization', function() {
+          this.importLazyGroup('lazyUpload');
+        });
+      }
+
+    });
+  </script>
+</dom-module>
